@@ -44,15 +44,14 @@
 %--------------------------------------------------------------------------------
 % Headers
 %--------------------------------------------------------------------------------
-\title[]{Property Driven Development in Erlang}
-\subtitle{By Example}
+\title[]{Tests, Properties, and Software Evolution}
 
 \author[Samuel Rivas]{Samuel Rivas}
 
 \institute[LambdaStream]{LambdaStream S.L.\\ <samuel.rivas@lambdastream.com>\\%
   \vspace{1cm}\includegraphics[width=.25\textwidth]{Logo-ProTest-pos-web.jpg}}
 
-\date[AST 2010]{Cape Town, 2010}
+\date[Coruña 2010]{A Coruña, 2010}
 \subject{Testing}
 
 % TOC before each subsection
@@ -387,8 +386,8 @@ prop_tokens() ->
 
   \begin{alertblock}{Tests Fail!}
     \begin{description}[Smaller Counterexample]
-    \item<+->[Counterexample] [\{var,"~"\},\{var,"<0)"\},\{var,"@b39"\}]
-    \item<+->[Smaller Counterexample] [\{var,"@"\}]
+    \item<+->[Counterexample] [\{var,"~",""\},\{var,"<0)",""\},\{var,"@b39",""\}]
+    \item<+->[Smaller Counterexample] [\{var,"@",""\}]
     \end{description}
   \end{alertblock}
 
