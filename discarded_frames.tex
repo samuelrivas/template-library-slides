@@ -1,0 +1,65 @@
+
+\begin{frame}
+  \frametitle{Problems With Testing}
+
+  \begin{itemize}
+  \item Testing is necessary
+  \item But's not \textit{always} done
+  \item We need techniques and frameworks to
+    \begin{itemize}
+    \item Make it easier
+    \item Make it faster
+    \item Make it funnier
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{A year later}
+
+  \begin{block}<+->{You want to optimise some steps}
+    \begin{itemize}
+    \item You remember that the library had three main components
+      \begin{itemize}
+      \item The scanner
+      \item The parser
+      \item The string writer
+      \end{itemize}
+    \item You want to optimise the scanner
+    \end{itemize}
+  \end{block}
+
+  \begin{alertblock}<+->{Problem}
+    \begin{overprint}
+      \onslide<.> Whenever you touch the scanner tests fail, but the reason is
+      obscure and difficult to trace.
+
+      \onslide<+> Some developers made changes bypassing the design, hacking
+      until tests passed again.
+
+      \onslide<+> You get down
+    \end{overprint}
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The Scanner Property}
+
+  \begin{block}{Generator}
+\begin{verbatim}
+eqc_gen:list(
+  eqc_gen:oneof(
+    [{var,ql_gen:string()},{text,ql_gen:string()}])).
+\end{verbatim}
+  \end{block}
+
+  \begin{exampleblock}{Mappings}
+\begin{verbatim}
+> to_string([{text,"hi "},{var,"name"}]).
+"hi @name@"
+> to_tokens([{text,"hi "},{var,"name"}]).
+[{string,"hi "},at,{string,"name"},at]
+\end{verbatim}
+  \end{exampleblock}
+\end{frame}
+

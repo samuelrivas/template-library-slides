@@ -1,0 +1,233 @@
+Main idea:
+  * Tests ensure quality *forever*
+
+Secondary ideas:
+  * Writing about properties frees the developer about testing corner cases,
+    even when the code evolves
+  * One weakness is that test data distribution may be unbalanced
+  * Tests are independent of the data generators -> the @ symbol is only special
+     when generating test data
+  * Usually, there will be many issues with the model
+
+Introduce problems to solve:
+
+  * Write the tests: TDD
+  * Test untestable code: TDD
+  * Write extensive test units in advance (in reasonable time): PBT
+  * Think what the program *does*: PBT
+
+
+First property: templates identity property
+  * Don't want to think too much about the implementation yet
+  * Preparing the infrastructure for later development
+
+
+Script
+------
+
+** Reverse this, introduce first PBT **
+
+Introduce the problem using the example. State that is a very simple problem,
+but can be extrapolated to more complex ones as we are used to deal with.
+
+Try to test this already implemented interface ...
+
+Problem: you've to know the problematic patterns to be extensive
+Problem: you don't really want to test this, you know it works
+Problem: you can't really be sure that your tests are ok unless you make them
+  fail
+
+You know your code works, you've manually tested it. So you feel satisfied after
+those tests.
+
+First problem, a year later you want to optimise the parsing step.
+
+Conclude that is best to write test first.
+
+Start writing tests first:
+
+Problem: you're not going to be extensive enough
+Problem: you tie too much implementation details when you sill don't know what
+you are going to do
+  That means reworking the tests now and then
+
+Wouldn't be nice to test a property rather than a behaviour?
+
+Problems yet to introduce:
+
+Problem: you're not securing your design (example of breaking it, dumb
+optimisation for the case of two @ [don't do that for now])
+
+Suppose we want to optimise it internally, and we break the parser.
+
+--
+
+We will use the tool QuickCheck to support property based testing in
+Erlang. Introduce briefly generators and shrinking.
+
+To start with, we define a simple property that is simple to meet. For all
+strings, not substituting anything is an identity function. Note that this is
+much stronger than just saying for the string foo, not substituting anything
+returns foo.
+
+Use the tokens implementation to show the symbolic representation
+technique. First define how a template looks like (vars and text).
+
+From that representation, we can now derive all intermediate steps. We'll first
+deal with the scanner (show example and property).
+
+Show an example of the many errors found in this step.
+
+Then, we deal with the parser (show example and property).
+
+Show the possible bug about forgetting to switch terminals in the parser
+
+Show how to make a change that affects the properties -> add support to @
+symbols. This changes only the generators and the ancillary functions related to
+them. The properties remain the same.
+
+Show the problem with bad statistical distribution (not the solution).
+
+Conclude
+
+--
+
+Alternative script:
+
+Introduce the problem to solve with PBT
+
+Show how to start
+
+Show how to evolve (write our template spec and implement the parser and the
+scanner)
+
+Show how to make little changes
+
+Show the challenges (test distribution)
+
+Conclude
+
+Per-slide speech
+================
+
+Problems about testing
+----------------------
+
+We all now that testing is good or, even more, necessary. But we also know that
+s not always done with enough quality, or done at all. That means that there are
+some fundamental problems about it that must be addressed to promote it among
+developers or, at least, among our coworker teams.
+
+Suppose that we have just produced a template library with an interface like
+this:
+
+string(String, Subs)
+
+We know what it does, so we proceed to to write a test suite
+
+string_test_() ->
+    [?_assertEqual("hello Samuel", lstd_template:string("hello Samuel", [])),
+
+     ?_assertEqual(
+        "hello Samuel",
+        lstd_template:string("hello @name@", [{"name", "Samuel"}]))].
+
+
+Structure
+=========
+
+ * Introduction: Present the problem of traditional testing when TDDing -> logic
+   coverage (3.5 min) [start in slide 5-20]
+
+   Show the slide with the function and the test about the substitution
+   Say that everything is tested
+   Say the optimisation didn't require to change the tests
+
+ * Property Based Testing: Introduce the technique (1.5 min)
+
+ * Introduce symbolic templates as our model (5 min)
+
+ * Show how to use the symbolic templates to drive the development
+   * Writing the production code (4 min)
+
+   * Doing maintenance changes (4 min)
+
+ * Show the problems about statistics in coverage (overtime)
+
+ * Conclude
+
+
+Speech
+======
+
+I'm going to talk about combining test driven development and property based
+testing to implement an example library using property driven development, using
+properties instead of traditional test cases to conduct the development
+process. With this technique, we are able to produce more robust tests with
+similar time investment than using traditional testing, and after the initial
+stages, tests will naturally evolve in parallel with the implementation.
+
+Suppose that we have implemented this library using a traditional test driven
+development approach. The library exports a function that maps templates,
+strings with variable names, and substitution lists, into strings were the
+variables are substituted by the substitution values.
+
+To write that we would've produced a set of tests, being the most relevant this
+one, that says that applying a substitution saying that name is Samuel to a
+template Hi and the variable name outputs Hi samuel.
+
+Suppose that after a year in production we need to do a change, our
+implementation used at symbols to delimit variables, so the couln't be used in
+the text part. And someone wants to pay for that feature.
+
+To do that we will write a new test, saying that, for example, @@ maps to @.
+
+We fix the code to pass that test, probably do some more manual tests, and
+ship it.
+
+Unfortunately, when the customer upgrades his system and writes this new code,
+it crashes. Ouch! it is interpreting the escaped at in the variable name! That
+should be interpreted as two variables and a escaped at in the middle.
+
+The problem is that, even if the original test suite covered all possible corner
+cases, this bug is a new corner case. And the developer that introduced the
+changes relayed on the original test suite to avoid expending too much time
+trying to understand ad test the change thoroughly, that's one of the benefits
+one expect to get when using TDD to produce extensive test suites. Thus, our
+tests were not preserving the system's behaviour, they were just repeatedly testing the initial implementation.
+
+One solution to that problem is to produce more extensive test suites, but that
+can easily become too expensive. Furthermore, one starts to travel heavy, and
+that's the opposite of what you want when using automated test suites. And of
+course, it is impossible foresee all possible future corner cases.
+
+One solution to that is using property based testing, that consists of writing
+properties about the code rather than concrete test cases, and use a tool to
+verify that the code we produce meets those properties.
+
+We use a tool called QuickCheck that lets us write properties as Erlang
+functions, and, using those properties, generates random test cases to verify
+the code. For example, if we define this property about the list reverse
+function, QuickCheck will generate many test cases like those, using random
+lists as input.
+
+Using QuickCheck, we can start developing the library defining properties on it
+and writing code to pass those properties. A very property we can write to start
+with is the next, For all string S, if we use an empty substitution list, our
+function must output the same string.
+
+In QuickCheck, the property is written using the macro forall, that takes a
+variable as first argument, a data generator as second, and a logic expression
+that it will check for values of the variable generated by the generator.
+
+Of course this property is not very useful since it could be met with this naïve
+implementation. Furthermore, it's wrong, as we explain in the paper.
+
+But following this same idea, we can describe our substitution process defining
+properties about it. If the implementation is too difficult, we must write lower
+level properties that we can combine to meet the final one.
+
+One common technique to write properties about the final functions we want to
+develop is to define a symbolic representation that we can map to inputs,
+outputs, function arguments and any intermediate result. Then, we can generate
+those symbolic representation and write properties about them.
