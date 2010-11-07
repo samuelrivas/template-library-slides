@@ -1,4 +1,4 @@
-DOC=ast_2010_slides.tex
+DOC=lambda_2010_slides.tex
 
 all:
 	rubber -d $(DOC)
