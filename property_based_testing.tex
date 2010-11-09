@@ -173,6 +173,19 @@ template:apply(
   \end{block}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{New Test Cases}
+
+\begin{verbatim}
+?assertEqual("@",template:apply("@@",[]))
+
+?assertEqual(
+  "samuel.rivas@lambdastream.com",
+  template:apply(
+    "samuel.rivas@@lambdastream.com",[])
+\end{verbatim}
+\end{frame}
+
 \end{document}
 
 \begin{frame}[fragile]
