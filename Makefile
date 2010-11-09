@@ -1,4 +1,4 @@
-DOC=lambda_2010_slides.tex
+DOC=property_based_testing.tex
 
 all:
 	rubber -d $(DOC)
