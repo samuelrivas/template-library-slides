@@ -231,6 +231,15 @@ exception: {variable_not_found,"name@@domain"}
   A figure pointing to the error in red
 \end{frame}
 
+%% TODO: Find a picture
+\begin{frame}
+  \begin{center}
+    {\huge Testing What Should't Fail}\\
+    \vspace{1cm}
+    And you though the computer would generalise ...
+  \end{center}
+\end{frame}
+
 \begin{frame}[fragile]
   \frametitle{This Shouldn't Fail}
 
@@ -306,6 +315,7 @@ template:apply(
 
 \begin{frame}[fragile]
   \frametitle{The Counterexample}
+  \framesubtitle{The Change isn't Implemented Yet}
 
 \begin{verbatim}
 prop_template: ..Failed! After 12 tests.
@@ -320,6 +330,27 @@ Template: "@@"
 Substs  : []
 Expected: "@"
 Got     : []
+\end{verbatim}
+}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Another Counterexample}
+  \framesubtitle{Hunting the Bug!}
+
+\begin{verbatim}
+prop_template: ..Failed! After 16 tests.
+Shrinking....(4 times)
+[escaped_at]
+prop_template: Failed! After 1 tests.
+[{var," ",[]},{var," ",[]}]
+\end{verbatim}
+  {\color{red}
+\begin{verbatim}
+Template: "@ @@ @"
+Substs  : [{" ", ""}]
+Expected: ""
+Got     : {error, {variable_not_found," @ "}}
 \end{verbatim}
 }
 \end{frame}
