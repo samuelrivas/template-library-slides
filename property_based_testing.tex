@@ -304,6 +304,26 @@ template:apply(
   \end{block}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{The Counterexample}
+
+\begin{verbatim}
+prop_template: ..Failed! After 12 tests.
+Shrinking.(1 times)
+[escaped_at]
+prop_template: Failed! After 1 tests.
+[escaped_at]
+\end{verbatim}
+  {\color{red}
+\begin{verbatim}
+Template: "@@"
+Substs  : []
+Expected: "@"
+Got     : []
+\end{verbatim}
+}
+\end{frame}
+
 \end{document}
 
 \begin{frame}[fragile]
