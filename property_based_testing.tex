@@ -201,6 +201,33 @@ template:apply(
   \includegraphics[width=\textwidth]{images/nuclear}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{The Failure}
+
+\begin{block}<+->{Production Code}
+\begin{verbatim}
+template:apply(
+  "@name@@@@domain@",
+
+  [{"name",   "samuel.rivas"    },
+   {"domain", "lambdastream.com"}]).
+\end{verbatim}
+\end{block}
+
+\begin{alertblock}<+>{Production Error}
+\begin{verbatim}
+exception: {variable_not_found,"name@@domain"}
+\end{verbatim}
+\end{alertblock}
+\end{frame}
+
+%% TODO: Complete this
+\begin{frame}
+  \frametitle{The Failure}
+
+  A figure pointing to the error in red
+\end{frame}
+
 \end{document}
 
 \begin{frame}[fragile]
