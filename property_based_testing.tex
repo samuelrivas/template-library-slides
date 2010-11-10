@@ -253,6 +253,36 @@ exception: {variable_not_found,"name@@domain"}
   \includegraphics[width=\textwidth]{images/matrix}
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Template Library}
+
+  \begin{block}{Specification}%
+\begin{verbatim}
+template:apply(
+  "@lang@ rulez!", [{"lang", "Erlang"}]) ->
+
+"Erlang rulez!"
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The (Rough) Property}
+
+  \begin{center}
+    \textit{ For all template T, list of variables X, and list of values X',
+      apply(T, X) must yield T with X values switched to X'}
+  \end{center}
+
+  \begin{block}<2->{Erlang Implementation}
+\begin{verbatim}
+?FORALL(T, template(),
+  template:apply(to_string(T), to_subs(T)) ==
+  to_result(T)).
+\end{verbatim}
+  \end{block}
+\end{frame}
+
 \end{document}
 
 \begin{frame}[fragile]
