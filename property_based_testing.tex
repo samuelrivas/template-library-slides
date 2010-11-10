@@ -228,6 +228,27 @@ exception: {variable_not_found,"name@@domain"}
   A figure pointing to the error in red
 \end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{This Shouldn't Fail}
+
+\begin{verbatim}
+?assertEqual(
+   "Erlang rulez!", template:apply(
+   "@lang@ rulez!",[{"lang","Erlang"}])
+
+?assertEqual("@",template:apply("@@",[]))
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Missing Case}
+\begin{verbatim}
+?assertEqual(
+  "foobar", template:apply(
+  "@one@@two@",[{"one","foo"},{"two", "bar"}])
+\end{verbatim}
+\end{frame}
+
 \end{document}
 
 \begin{frame}[fragile]
