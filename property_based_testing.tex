@@ -8,6 +8,9 @@
 
 %\input{lambda_theme}
 
+%% TODO:
+%% * Put the sign of Change Ahead
+
 %--------------------------------------------------------------------------------
 % Style
 %--------------------------------------------------------------------------------
@@ -277,6 +280,24 @@ template:apply(
   \begin{block}<2->{Erlang Implementation}
 \begin{verbatim}
 ?FORALL(T, template(),
+  template:apply(to_string(T), to_subs(T)) ==
+  to_result(T)).
+\end{verbatim}
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Change!}
+
+  \begin{center}
+    \textit{ For all template T, list of variables X, and list of values X',
+      apply(T, X) must yield T with X values switched to X' \alert{and all
+        escaped at symbols changed to at symbols}}
+  \end{center}
+
+  \begin{block}{Erlang Implementation}
+\verb+?FORALL(T,+\alert{\texttt{template(),}}
+\begin{verbatim}
   template:apply(to_string(T), to_subs(T)) ==
   to_result(T)).
 \end{verbatim}
