@@ -509,15 +509,18 @@ Got     : {error, {variable_not_found," @ "}}
       \draw (-4,2) node (template) {"\alert{@@}"};
       \draw (0,2) node (subs) {[]};
       \draw (4,2) node (result) {"\alert{@}"};
-      \draw (0,0 -| template.west) node (funct)[right] {apply("@@",[])};
+      \draw (0,0 -| template.west) node (funct)[right] {apply(};
+      \draw (funct.east) node(arg1)[right] {"@@",};
+      \draw (arg1.east) node(arg2)[right] {[]};
+      \draw (arg2.east) node(paren)[right] {)};
 
       \draw [->] (gen) -- (symbol);
-      \draw [->] (subs) -- (funct);
-      \draw [->] (template) -- (funct);
+      \draw [->] (subs) -- (arg2);
+      \draw [->] (template) -- (arg1);
       \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_string};
       \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
       \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
-      \draw [<->] (funct) -| (result) node [midway,above,pos=0.25] {==};
+      \draw [<->] (paren) -| (result) node [midway,above,pos=0.25] {==};
     \end{tikzpicture}
   \end{center}
 \end{frame}
