@@ -415,26 +415,82 @@ Got     : {error, {variable_not_found," @ "}}
       % Bounding box
       \path (-6,-1) rectangle (6,7);
 
-      \draw<1> (0,5) node (symbol){template()};
-      \draw<2> (0,6) node (gen){template()};
-      \draw<2>[red] (0,5) node (symbol){[\{text,"Hi "\},\{var,"name","Samuel"\}]};
+      \draw (0,5) node (symbol){template()};
+
       \draw (-4,2) node (template) {"Hi @name@"};
       \draw (0,2) node (subs) {[\{"name","Samuel"\}]};
       \draw (4,2) node (result) {"Hi Samuel"};
 
-      \draw (0,0 -| template.west) node (funct)[right] {\alert<1>{apply("Hi
-          @name@",[\{"name","Samuel"\}])}};
+      \draw (0,0 -| template.west) node (funct)[right] {apply("Hi
+          @name@",[\{"name","Samuel"\}])};
 
-      \draw<2> [->] (gen) -- (symbol);
       \draw [->] (subs) -- (funct);
       \draw [->] (template) -- (funct);
       \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_strting};
       \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
       \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
-      \draw<1> [<->,red] (funct) -| (result) node [midway,above,pos=0.25] {==};
-      \draw<2-> [<->] (funct) -| (result) node [midway,above,pos=0.25] {==};
+      \draw [<->,red] (funct) -| (result) node [midway,above,pos=0.25] {==};
     \end{tikzpicture}
   \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{An Outline of the Symbolic Template Generator)}
+
+  \begin{description}[\textbf{template()} ->]
+  \item[\textbf{template()} ->] \texttt{list(elements([text(),var()])).}
+  \item[\textbf{text()} ->] \texttt{\{text,string()\}.}
+  \item[\textbf{var()} ->] \texttt{\{var,string(),string()\}.}
+  \end{description}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Symbolic Templates}
+
+  \begin{center}
+    \begin{tikzpicture}
+      % \draw[help lines](-6,-1) grid (6,7);
+
+      % Bounding box
+      \path (-6,-1) rectangle (6,7);
+
+      \draw (0,6) node (gen){template()};
+      \draw[red] (0,5) node (symbol){[\{text,"Hi "\},\{var,"name","Samuel"\}]};
+      \draw (-4,2) node (template) {"Hi @name@"};
+      \draw (0,2) node (subs) {[\{"name","Samuel"\}]};
+      \draw (4,2) node (result) {"Hi Samuel"};
+
+      \draw (0,0 -| template.west) node (funct)[right] {apply("Hi
+          @name@",[\{"name","Samuel"\}])};
+
+      \draw [->] (gen) -- (symbol);
+      \draw [->] (subs) -- (funct);
+      \draw [->] (template) -- (funct);
+      \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_strting};
+      \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
+      \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
+      \draw [<->] (funct) -| (result) node [midway,above,pos=0.25] {==};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The Property}
+
+  {\color{red}
+\begin{verbatim}
+?FORALL(T, template(),
+  template:apply(to_string(T), to_subs(T)) ==
+  to_result(T)).
+\end{verbatim}
+  }
+
+  \vspace{0.5cm}
+  \begin{center}
+    \textit{\footnotesize For all template T, list of variables X, and list of values X',
+      apply(T, X) must yield T with X values switched to X'}
+  \end{center}
+
 \end{frame}
 
 \end{document}
