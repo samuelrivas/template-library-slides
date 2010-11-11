@@ -393,14 +393,17 @@ Got     : {error, {variable_not_found," @ "}}
       \draw (0,2) node (subs) {[\{"name","Samuel"\}]};
       \draw (4,2) node (result) {\alert{??}};
 
-      \draw (0,0 -| template.west) node (funct)[right] {\alert{apply("Hi
-        @name@",[\{"name","Samuel"\}])}};
+      \draw (0,0 -| template.west) node (funct)[right] {apply(};
 
-      \draw [->] (subs) -- (funct);
-      \draw [->] (template) -- (funct);
+      \draw (funct.east) node(arg1)[right] {"Hi @name@",};
+      \draw (arg1.east) node(arg2)[right] {[\{"name","Samuel"\}]};
+      \draw (arg2.east) node(paren)[right] {)};
+
+      \draw [->] (template) -- (arg1);
+      \draw [->] (subs) -- (arg2);
       \draw [->] (templ) -- (template);
       \draw [->] (subst) -- (subs);
-      \draw [<->,red] (funct) -| (result) node [midway,above,pos=0.25] {==};
+      \draw [<->,red] (paren) -| (result) node [midway,left,pos=0.75] {==};
     \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -421,15 +424,18 @@ Got     : {error, {variable_not_found," @ "}}
       \draw (0,2) node (subs) {[\{"name","Samuel"\}]};
       \draw (4,2) node (result) {"Hi Samuel"};
 
-      \draw (0,0 -| template.west) node (funct)[right] {apply("Hi
-          @name@",[\{"name","Samuel"\}])};
+      \draw (0,0 -| template.west) node (funct)[right] {apply(};
 
-      \draw [->] (subs) -- (funct);
-      \draw [->] (template) -- (funct);
+      \draw (funct.east) node(arg1)[right] {"Hi @name@",};
+      \draw (arg1.east) node(arg2)[right] {[\{"name","Samuel"\}]};
+      \draw (arg2.east) node(paren)[right] {)};
+
       \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_strting};
       \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
       \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
-      \draw [<->,red] (funct) -| (result) node [midway,above,pos=0.25] {==};
+      \draw [->] (template) -- (arg1);
+      \draw [->] (subs) -- (arg2);
+      \draw [<->,red] (paren) -| (result) node [midway,left,pos=0.75] {==};
     \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -460,16 +466,19 @@ Got     : {error, {variable_not_found," @ "}}
       \draw (0,2) node (subs) {[\{"name","Samuel"\}]};
       \draw (4,2) node (result) {"Hi Samuel"};
 
-      \draw (0,0 -| template.west) node (funct)[right] {apply("Hi
-          @name@",[\{"name","Samuel"\}])};
+      \draw (0,0 -| template.west) node (funct)[right] {apply(};
+
+      \draw (funct.east) node(arg1)[right] {"Hi @name@",};
+      \draw (arg1.east) node(arg2)[right] {[\{"name","Samuel"\}]};
+      \draw (arg2.east) node(paren)[right] {)};
 
       \draw [->] (gen) -- (symbol);
-      \draw [->] (subs) -- (funct);
-      \draw [->] (template) -- (funct);
       \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_strting};
       \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
       \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
-      \draw [<->] (funct) -| (result) node [midway,above,pos=0.25] {==};
+      \draw [->] (template) -- (arg1);
+      \draw [->] (subs) -- (arg2);
+      \draw [<->] (paren) -| (result) node [midway,left,pos=0.75] {==};
     \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -515,11 +524,11 @@ Got     : {error, {variable_not_found," @ "}}
       \draw (arg2.east) node(paren)[right] {)};
 
       \draw [->] (gen) -- (symbol);
-      \draw [->] (subs) -- (arg2);
-      \draw [->] (template) -- (arg1);
       \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_string};
       \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
       \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
+      \draw [->] (template) -- (arg1);
+      \draw [->] (subs) -- (arg2);
       \draw [<->] (paren) -| (result) node [midway,above,pos=0.25] {==};
     \end{tikzpicture}
   \end{center}
