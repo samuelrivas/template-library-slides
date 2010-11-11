@@ -435,7 +435,7 @@ Got     : {error, {variable_not_found," @ "}}
 \end{frame}
 
 \begin{frame}
-  \frametitle{An Outline of the Symbolic Template Generator)}
+  \frametitle{An Outline of the Symbolic Template Generator}
 
   \begin{description}[\textbf{template()} ->]
   \item[\textbf{template()} ->] \texttt{list(elements([text(),var()])).}
@@ -487,10 +487,39 @@ Got     : {error, {variable_not_found," @ "}}
 
   \vspace{0.5cm}
   \begin{center}
-    \textit{\footnotesize For all template T, list of variables X, and list of values X',
-      apply(T, X) must yield T with X values switched to X'}
+    \textit{\footnotesize For all template T, list of variables X, and list of
+      values X', apply(T, X) must yield T with X values switched to X'}
   \end{center}
+\end{frame}
 
+\begin{frame}[fragile]
+  \frametitle{Templates 2.0 (With Escaped Ats)}
+
+  \begin{center}
+    \begin{tikzpicture}
+%      \draw[help lines](-6,0) grid (6,6);
+
+      % Bounding box
+      \path (-6,-1) rectangle (6,7);
+
+      \draw (0,5) node (symbol)
+      {[\alert{escaped\_at}]};
+
+      \draw (0,6) node (gen){template()};
+      \draw (-4,2) node (template) {"\alert{@@}"};
+      \draw (0,2) node (subs) {[]};
+      \draw (4,2) node (result) {"\alert{@}"};
+      \draw (0,0 -| template.west) node (funct)[right] {apply("@@",[])};
+
+      \draw [->] (gen) -- (symbol);
+      \draw [->] (subs) -- (funct);
+      \draw [->] (template) -- (funct);
+      \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_string};
+      \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
+      \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
+      \draw [<->] (funct) -| (result) node [midway,above,pos=0.25] {==};
+    \end{tikzpicture}
+  \end{center}
 \end{frame}
 
 \end{document}
