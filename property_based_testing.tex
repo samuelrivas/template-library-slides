@@ -360,6 +360,11 @@ Got     : {error, {variable_not_found," @ "}}
 \begin{frame}
   \begin{center}
     {\huge Testing What Should Always Work}\\
+    \vspace{1cm}
+
+    \textit{ For all template T, list of variables X, and list of values X',
+      apply(T, X) must yield T with X values switched to X' and all escaped at
+      symbols changed to at symbols}
   \end{center}
 \end{frame}
 
@@ -373,36 +378,14 @@ Got     : {error, {variable_not_found," @ "}}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{Symbolic Templates}
-
-  \begin{center}
-    \begin{tikzpicture}
-%      \draw[help lines](-6,0) grid (6,6);
-
-      % Bounding box
-      \path (-6,0) rectangle (6,6);
-
-      \draw<1-> (0,5) node (symbol){[\{text,"Hi "\},\{var,"name","Samuel"\}]};
-      \draw<2-> (-4,2) node (template) {"Hi @name@"};
-      \draw<3-> (0,1) node (subs) {[\{"name","Samuel"\}]};
-      \draw<4-> (4,2) node (result) {"Hi Samuel"};
-
-      \draw<2-> [->] (symbol) -- (template) node [midway,above,sloped] {to\_strting};
-      \draw<3-> [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
-      \draw<4-> [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
-    \end{tikzpicture}
-  \end{center}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Generating Templates?}
 
   \begin{center}
     \begin{tikzpicture}
-      % \draw[help lines](-6,0) grid (6,6);
+      % \draw[help lines](-6,-1) grid (6,7);
 
       % Bounding box
-      \path (-6,0) rectangle (6,6);
+      \path (-6,-1) rectangle (6,7);
 
       \draw (-4,5) node (templ){template()};
       \draw (0,5) node (subst){subst()};
@@ -427,20 +410,22 @@ Got     : {error, {variable_not_found," @ "}}
 
   \begin{center}
     \begin{tikzpicture}
-      % \draw[help lines](-6,0) grid (6,6);
+      % \draw[help lines](-6,-1) grid (6,7);
 
       % Bounding box
-      \path (-6,0) rectangle (6,6);
+      \path (-6,-1) rectangle (6,7);
 
       \draw<1> (0,5) node (symbol){template()};
+      \draw<2> (0,6) node (gen){template()};
       \draw<2>[red] (0,5) node (symbol){[\{text,"Hi "\},\{var,"name","Samuel"\}]};
       \draw (-4,2) node (template) {"Hi @name@"};
       \draw (0,2) node (subs) {[\{"name","Samuel"\}]};
       \draw (4,2) node (result) {"Hi Samuel"};
 
       \draw (0,0 -| template.west) node (funct)[right] {\alert<1>{apply("Hi
-        @name@",[\{"name","Samuel"\}])}};
+          @name@",[\{"name","Samuel"\}])}};
 
+      \draw<2> [->] (gen) -- (symbol);
       \draw [->] (subs) -- (funct);
       \draw [->] (template) -- (funct);
       \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_strting};
