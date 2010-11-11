@@ -14,6 +14,9 @@
 %--------------------------------------------------------------------------------
 % Style
 %--------------------------------------------------------------------------------
+% Libraries
+\usetikzlibrary{shapes.symbols}
+
 % Some generalities
 \usetheme{default}
 \useinnertheme{circles}
@@ -342,8 +345,6 @@ Got     : []
 \begin{verbatim}
 prop_template: ..Failed! After 16 tests.
 Shrinking....(4 times)
-[escaped_at]
-prop_template: Failed! After 1 tests.
 [{var," ",[]},{var," ",[]}]
 \end{verbatim}
   {\color{red}
@@ -511,8 +512,7 @@ Got     : {error, {variable_not_found," @ "}}
       % Bounding box
       \path (-6,-1) rectangle (6,7);
 
-      \draw (0,5) node (symbol)
-      {[\alert{escaped\_at}]};
+      \draw (0,5) node (symbol) {[\alert{escaped\_at}]};
 
       \draw (0,6) node (gen){template()};
       \draw (-4,2) node (template) {"\alert{@@}"};
@@ -530,6 +530,40 @@ Got     : {error, {variable_not_found," @ "}}
       \draw [->] (template) -- (arg1);
       \draw [->] (subs) -- (arg2);
       \draw [<->] (paren) -| (result) node [midway,above,pos=0.25] {==};
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{The Counterexample Hero}
+
+  \begin{center}
+    \begin{tikzpicture}
+%      \draw[help lines](-6,0) grid (6,6);
+
+      % Bounding box
+      \path (-6,-1) rectangle (6,7);
+
+      \draw (0,5) node (symbol) {[\{var," ",[]\},\{var," ",[]\}]};
+
+
+      \draw (0,6) node (gen){template()};
+      \draw (-4,2) node (template) {"@ \alert{@@} @"};
+      \draw (0,2) node (subs) {[\{" ", ""\}]};
+      \draw (4,2) node (result) {""};
+      \draw (0,0 -| template.west) node (funct)[right] {apply(};
+      \draw (funct.east) node(arg1)[right] {"@ @@ @",};
+      \draw (arg1.east) node(arg2)[right] {[\{" ", ""\}]};
+      \draw (arg2.east) node(paren)[right] {)};
+
+      \draw [->] (gen) -- (symbol);
+      \draw [->] (symbol) -- (template) node [midway,above,sloped] {to\_string};
+      \draw [->] (symbol) -- (result) node [midway,above,sloped] {to\_result};
+      \draw [->] (symbol) -- (subs) node [midway,above,sloped] {to\_subs};
+      \draw [->] (template) -- (arg1);
+      \draw [->] (subs) -- (arg2);
+      \draw [<->] (paren) -| (result) node [starburst,draw,fill=yellow,
+      draw=red,midway,above,pos=0.25] {not equal!};
     \end{tikzpicture}
   \end{center}
 \end{frame}
