@@ -475,25 +475,6 @@ Got     : {error, {variable_not_found," @ "}}
 \end{frame}
 
 \begin{frame}[fragile]
-  \frametitle{The Property}
-
-  {\color{red}
-\begin{verbatim}
-?FORALL(T, template(),
-  template:apply(to_string(T), to_subs(T)) ==
-  to_result(T)).
-\end{verbatim}
-  }
-
-  \vspace{0.5cm}
-  \begin{center}
-    \textit{\footnotesize For all template T, list of variables X, and
-      list of substitutions X', apply(T, X) must yield T with X values
-      switched to X'}
-  \end{center}
-\end{frame}
-
-\begin{frame}[fragile]
   \frametitle{Templates 2.0 (With Escaped Ats)}
 
   \begin{center}
