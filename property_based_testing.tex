@@ -127,12 +127,14 @@ template:apply(
 
 \begin{frame}[fragile]
   \frametitle{The Test Suite}
-
+{\color{red}
 \begin{verbatim}
 ?assertEqual(
    "Erlang rulez!", template:apply(
    "@lang@ rulez!",[{"lang","Erlang"}])
-
+\end{verbatim}
+}%
+\begin{verbatim}
 ?assertEqual(
    "C sux!", template:apply(
    "@lang@ @what@!",[{"lang","C"},{"what","sux"}])
@@ -183,14 +185,7 @@ template:apply(
 \begin{frame}[fragile]
   \frametitle{New Test Cases}
 
-\begin{verbatim}
-?assertEqual("@",template:apply("@@",[]))
-
-?assertEqual(
-  "samuel.rivas@lambdastream.com",
-  template:apply(
-    "samuel.rivas@@lambdastream.com",[])
-\end{verbatim}
+\texttt{?assertEqual("\textbf{@}",template:apply("\textbf{@@}",[]))}
 \end{frame}
 
 \begin{frame}
