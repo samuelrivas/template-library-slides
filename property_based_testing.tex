@@ -212,20 +212,14 @@ template:apply(
   \frametitle{The Failure}
 
 \begin{block}<+->{Production Code}
-\begin{verbatim}
-template:apply(
-\end{verbatim}
-\texttt{  "\alert<3>{\alert<2>{@name@}@@\alert<2>{@domain@}}",}
-\begin{verbatim}
-  [{"name",   "samuel.rivas"    },
-   {"domain", "lambdastream.com"}]).
-\end{verbatim}
+\texttt{template:apply(}\\
+\texttt{~~"\alert<3>{\alert<2>{@name@}@@\alert<2>{@domain@}}",}\\
+\texttt{~~[\{"\alert<2>{name}",   "samuel.rivas"    \},}\\
+\texttt{~~~\{"\alert<2>{domain}", "lambdastream.com"\}]).}
 \end{block}
 
 \begin{alertblock}<1->{Production Error}
-\begin{verbatim}
-exception: {variable_not_found,"name@@domain"}
-\end{verbatim}
+\texttt{exception: \{variable\_not\_found,"\alert<3>{name@@domain}"\}}
 \end{alertblock}
 \end{frame}
 
