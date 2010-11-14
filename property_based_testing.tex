@@ -243,11 +243,9 @@ template:apply(
 
 \begin{frame}[fragile]
   \frametitle{Missing Case}
-\begin{verbatim}
-?assertEqual(
-  "foobar", template:apply(
-  "@one@@two@",[{"one","foo"},{"two", "bar"}])
-\end{verbatim}
+\texttt{?assertEqual(}\\
+\texttt{~~"foobar", template:apply(}\\
+\texttt{~~"@one\alert{\textbf{@@}}two@",[\{"one","foo"\},\{"two", "bar"\}])}
 \end{frame}
 
 \begin{frame}[plain]
