@@ -274,8 +274,9 @@ template:apply(
   \frametitle{The (Rough) Property}
 
   \begin{center}
-    \textit{ For all template T, list of variables X, and list of values X',
-      apply(T, X) must yield T with X values switched to X'}
+    \textit{ For all template T, list of variables X, and list of
+      substitutions X', apply(T, X) must yield T with X values
+      switched to X'}
   \end{center}
 
   \begin{block}<2->{Erlang Implementation}
@@ -291,9 +292,10 @@ template:apply(
   \frametitle{Change!}
 
   \begin{center}
-    \textit{ For all template T, list of variables X, and list of values X',
-      apply(T, X) must yield T with X values switched to X' \alert{and all
-        escaped at symbols changed to at symbols}}
+    \textit{ For all template T, list of variables X, and list of
+      substitutions X', apply(T, X) must yield T with X values
+      switched to X' \alert{and all escaped at symbols changed to at
+        symbols}}
   \end{center}
 
   \begin{block}{Erlang Implementation}
@@ -351,9 +353,9 @@ Got     : {error, {variable_not_found," @ "}}
     {\huge Testing What Should Always Work}\\
     \vspace{1cm}
 
-    \textit{ For all template T, list of variables X, and list of values X',
-      apply(T, X) must yield T with X values switched to X' and all escaped at
-      symbols changed to at symbols}
+    \textit{ For all template T, list of variables X, and list of
+      substitutions X', apply(T, X) must yield T with X values
+      switched to X' and all escaped at symbols changed to at symbols}
   \end{center}
 \end{frame}
 
@@ -485,8 +487,9 @@ Got     : {error, {variable_not_found," @ "}}
 
   \vspace{0.5cm}
   \begin{center}
-    \textit{\footnotesize For all template T, list of variables X, and list of
-      values X', apply(T, X) must yield T with X values switched to X'}
+    \textit{\footnotesize For all template T, list of variables X, and
+      list of substitutions X', apply(T, X) must yield T with X values
+      switched to X'}
   \end{center}
 \end{frame}
 
